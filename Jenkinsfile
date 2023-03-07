@@ -1,6 +1,5 @@
 pipeline {
     agent {
-        label 'dagger'
         kubernetes {
             defaultContainer 'dagger'
             yaml '''
