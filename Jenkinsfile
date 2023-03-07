@@ -7,7 +7,7 @@ pipeline {
         spec:
           containers:
           - name: dagger
-            image: adlnc/dagger-jenkins-agent:test
+            image: "adlnc/dagger-jenkins-agent:test"
             imagePullPolicy: Always
             command:
             - sh
