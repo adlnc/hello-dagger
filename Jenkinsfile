@@ -6,18 +6,18 @@ pipeline {
             kind: Pod
             spec:
               containers:
-                - name: dagger
-                  image: adlnc/dagger-jenkins-agent:test
-                  imagePullPolicy: Always
-                  command:
-                    - sh
-                  volumeMounts:
-                    - name: docker-registry-config
-                      mountPath: /dagger/.docker
+              - name: dagger
+                image: adlnc/dagger-jenkins-agent:test
+                imagePullPolicy: Always
+                command:
+                - sh
+                volumeMounts:
+                  - name: docker-registry-config
+                    mountPath: /dagger/.docker
               volumes:
                 - name: docker-registry-config
                   configMap:
-                      name: docker-registry-config
+                    name: docker-registry-config
             '''
         }
     }
