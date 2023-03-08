@@ -1,40 +1,37 @@
-#!/usr/bin/env groovy
-
 pipeline {
   agent {
     kubernetes {
       yaml '''
-apiVersion: v1
-kind: Pod
-spec:
-  containers:
-  - name: dagger
-    image: "adlnc/dagger-jenkins-agent:test"
-    imagePullPolicy: Always
-    command:
-    - sh
-    tty: true
-    volumeMounts:
-      - name: docker-registry-config
-        mountPath: /dagger/.docker
-  volumes:
-    - name: docker-registry-config
-      configMap:
-        name: docker-registry-config
-'''
+        apiVersion: v1
+        kind: Pod
+        metadata:
+          labels:
+            some-label: some-label-value
+        spec:
+          containers:
+          - name: maven
+            image: maven:alpine
+            command:
+            - cat
+            tty: true
+          - name: busybox
+            image: busybox
+            command:
+            - cat
+            tty: true
+        '''
       retries 2
     }
   }
-  environment {
-    DH_CREDS = credentials('3f3f1cdb-c931-4993-a2df-59bdf30c48b7')
-  }
   stages {
-    stage('verify installation') {
+    stage('Run maven') {
       steps {
-        sh '''
-        dagger version
-        docker version
-        '''
+        container('maven') {
+          sh 'mvn -version'
+        }
+        container('busybox') {
+          sh '/bin/busybox'
+        }
       }
     }
   }
