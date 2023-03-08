@@ -1,5 +1,5 @@
 #!/usr/bin/env groovy
-podTemplate(yaml: '''
+podTemplate(yaml: """
     apiVersion: v1
     kind: Pod
     metadata:
@@ -7,7 +7,7 @@ podTemplate(yaml: '''
     spec:
       containers:
         - name: dagger
-          image: "adlnc/dagger-jenkins-agent:test"
+          image: adlnc/dagger-jenkins-agent:test
           imagePullPolicy: Always
           command:
             - sh
@@ -19,7 +19,7 @@ podTemplate(yaml: '''
         - name: docker-registry-config
           configMap:
             name: docker-registry-config
-    ''') {
+    """) {
     node("jslv-dagger") {
       environment {
         DH_CREDS = credentials('3f3f1cdb-c931-4993-a2df-59bdf30c48b7')
