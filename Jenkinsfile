@@ -4,26 +4,26 @@ pipeline {
   agent {
     kubernetes {
       yaml '''
-      apiVersion: v1
-      kind: Pod
-      metadata:
-        name: jslv-dagger
-      spec:
-        containers:
-        - name: dagger
-          image: "adlnc/dagger-jenkins-agent:test"
-          imagePullPolicy: Always
-          command:
-          - sh
-          tty: true
-          volumeMounts:
-            - name: docker-registry-config
-              mountPath: /dagger/.docker
-        volumes:
-          - name: docker-registry-config
-            configMap:
-              name: docker-registry-config
-      '''
+apiVersion: v1
+kind: Pod
+metadata:
+  name: jslv-dagger
+spec:
+  containers:
+    - name: dagger
+      image: "adlnc/dagger-jenkins-agent:test"
+      imagePullPolicy: Always
+      command:
+        - sh
+      tty: true
+      volumeMounts:
+        - name: docker-registry-config
+          mountPath: /dagger/.docker
+  volumes:
+    - name: docker-registry-config
+      configMap:
+        name: docker-registry-config
+'''
       retries 2
     }
   }
