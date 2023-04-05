@@ -6,6 +6,9 @@ pipeline {
       defaultContainer 'jslv-dagger'
       yaml '''
         kind: Pod
+        apiVersion: v1
+        metadata:
+          name: jslv-dagger
         spec:
           containers:
           - name: jslv-dagger
