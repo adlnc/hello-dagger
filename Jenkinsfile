@@ -3,7 +3,6 @@
 pipeline {
   agent { 
     kubernetes {
-      defaultContainer 'jslv-dagger'
       yaml '''
         kind: Pod
         apiVersion: v1
@@ -35,10 +34,12 @@ pipeline {
   stages {
     stage('verify installation') {
       steps {
-        sh '''
-        dagger version
-        docker version
-        '''
+        container('jslv-dagger'){
+          sh '''
+          dagger version
+          docker version
+          '''
+        }
       }
     }
   }
